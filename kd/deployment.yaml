@@ -38,33 +38,31 @@ spec:
         - name: SLS_DB_HOSTNAME
           valueFrom:
             secretKeyRef:
-              name: hocs-data-service
-              key: db.endpoint
+              name: hocs-rds-access
+              key: endpoint
         - name: SLS_DB_USERNAME
           valueFrom:
             secretKeyRef:
-              name: hocs-data-service
-              key: db.username
+              name: hocs-rds-access
+              key: username
         - name: SLS_DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: hocs-data-service
-              key: db.password
+              name: hocs-rds-access
+              key: password
         - name: SLS_DB_NAME
           valueFrom:
             secretKeyRef:
-              name: hocs-data-service
-              key: db.database
+              name: hocs-rds-access
+              key: database_name
         - name: SLS_DB_SCHEMA
-          valueFrom:
-            secretKeyRef:
-              name: hocs-data-service
-              key: db.schema
+          value:
+            'hocs-data'
         - name: SLS_DB_PORT
           valueFrom:
             secretKeyRef:
-              name: hocs-data-service
-              key: db.port
+              name: hocs-rds-access
+              key: port
         livenessProbe:
           httpGet:
             path: /healthz
