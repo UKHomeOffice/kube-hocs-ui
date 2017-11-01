@@ -88,11 +88,6 @@ spec:
       - name: proxy
         image: quay.io/ukhomeofficedigital/nginx-proxy:v1.7.0
         imagePullPolicy: Always
-        securityContext:
-           capabilities:
-             drop:
-               - SETUID
-               - SETGID
         resources:
          limits:
           memory: "100Mi"
@@ -109,14 +104,18 @@ spec:
             value: 'FALSE'
           - name: ENABLE_UUID_PARAM
             value: 'FALSE'
-          - name: HTTPS_REDIRECT
-            value: 'FALSE'
+          - name: ERROR_REDIRECT_CODES
+            value: "599"
+          - name: ADD_NGINX_SERVER_CFG
+            value: |
+              add_header Cache-Control private;
+              add_header X-Frame-Options "SAMEORIGIN" always;
+              add_header X-Content-Type-Options "nosniff" always;
+              add_header X-XSS-Protection "1; mode=block" always;
           - name: SERVER_CERT
             value: /etc/nginx/secrets/hocs-data-service-bundle.pem
           - name: SERVER_KEY
             value: /etc/nginx/secrets/hocs-data-service.pem
-          - name: ADD_NGINX_SERVER_CFG
-            value: 'gzip off;'
         volumeMounts:
           - name: certs
             mountPath: /etc/nginx/secrets
