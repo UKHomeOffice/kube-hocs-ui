@@ -63,26 +63,6 @@ spec:
             secretKeyRef:
               name: hocs-rds-access
               key: port
-        livenessProbe:
-          httpGet:
-            path: /healthz
-            port: http
-            httpHeaders:
-              - name: X-probe
-                value: kubelet
-          initialDelaySeconds: 10
-          periodSeconds: 20
-          timeoutSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /healthz
-            port: http
-            httpHeaders:
-              - name: X-probe
-                value: kubelet
-          initialDelaySeconds: 10
-          periodSeconds: 20
-          timeoutSeconds: 10
       - name: proxy
         image: quay.io/ukhomeofficedigital/nginx-proxy:v1.7.0
         imagePullPolicy: Always
