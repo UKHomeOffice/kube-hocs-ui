@@ -55,7 +55,7 @@ spec:
             secretKeyRef:
               name: hocs-rds-access
               key: database_name
-        - name: SLS_DB_SCHEMA
+        - name: SLS_SCHEMA_NAME
           value:
             'hocs-data'
         - name: SLS_DB_PORT
