@@ -1,19 +1,18 @@
----
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: hocs-data-service
   labels:
     version: {{.VERSION}}
+  name: hocs-data-service
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      name: hocs-data-service
   strategy:
     type: RollingUpdate
     rollingUpdate:
       maxUnavailable: 0
+  selector:
+    matchLabels:
+      name: hocs-data-service
   template:
     metadata:
       labels:
@@ -28,11 +27,10 @@ spec:
           limits:
             memory: 960Mi
         ports:
-        - name: http
-          containerPort: 8080
+        - containerPort: 8080
         env:
         - name: JAVA_OPTS
-          value: '-Xms150m -Xmx250m'
+          value: '-Xms150m -Xmx768m'
         - name: SPRING_PROFILES_ACTIVE
           value: 'postgres'
         - name: SERVER_PORT
@@ -88,21 +86,17 @@ spec:
       - name: proxy
         image: quay.io/ukhomeofficedigital/nginx-proxy:v1.7.0
         imagePullPolicy: Always
-        resources:
-         limits:
-          memory: "100Mi"
-          cpu: 100m
-         requests:
-          memory: "50Mi"
-          cpu: 100m
+        ports:
+        - containerPort: 80
+        - containerPort: 443
         env:
           - name: PROXY_SERVICE_HOST
             value: '127.0.0.1'
           - name: PROXY_SERVICE_PORT
             value: '8080'
-          - name: NAXSI_USE_DEFAULT_RULES
-            value: 'FALSE'
           - name: ENABLE_UUID_PARAM
+            value: 'FALSE'
+          - name: NAXSI_USE_DEFAULT_RULES
             value: 'FALSE'
           - name: ERROR_REDIRECT_CODES
             value: "599"
@@ -120,11 +114,6 @@ spec:
           - name: certs
             mountPath: /etc/nginx/secrets
             readOnly: true
-        ports:
-          - name: http
-            containerPort: 80
-          - name: https
-            containerPort: 443
       - name: vault-side-kick
         image: quay.io/ukhomeofficedigital/vault-sidekick-jks:v0.2.0
         imagePullPolicy: Always
@@ -138,7 +127,7 @@ spec:
         args:
           - -output=/etc/nginx/secrets
           - -tls-skip-verify=true
-          - -cn=pki:services/$NAMESPACE/pki/issue/default:common_name=hocs-data-service.${NAMESPACE}.svc.cluster.local,file=/etc/nginx/secrets/hocs-data-service,fmt=bundle
+          - -cn=pki:services/$NAMESPACE/pki/issue/default:common_name=hocs-data-service.${NAMESPACE}.svc.cluster.local,file=/etc/keystore/hocs-data-service,fmt=bundle
         env:
           - name: VAULT_ADDR
             value: "https://vault.vault.svc.cluster.local:8200"
@@ -152,7 +141,7 @@ spec:
               fieldRef:
                 fieldPath: metadata.namespace
         volumeMounts:
-          - mountPath: /etc/nginx/secrets/
+          - mountPath: /etc/keystore
             name: certs
       volumes:
         - name: certs
