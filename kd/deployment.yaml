@@ -59,7 +59,7 @@ spec:
               key: database_name
         - name: SLS_SCHEMA_NAME
           value:
-            'hocs-data'
+            'hocs_data'
         - name: SLS_DB_PORT
           valueFrom:
             secretKeyRef:
