@@ -31,6 +31,8 @@ spec:
         - name: http
           containerPort: 8080
         env:
+        - name: JAVA_OPTS
+          value: '-Xms150m -Xmx250m'
         - name: SPRING_PROFILES_ACTIVE
           value: 'postgres'
         - name: SERVER_PORT
