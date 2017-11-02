@@ -5,15 +5,14 @@ metadata:
   labels:
     version: {{.VERSION}}
 spec:
-  replicas: 2
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
   selector:
     matchLabels:
       name: hocs-data-service
-  strategy:
-    rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 2
-    type: RollingUpdate
   template:
     metadata:
       labels:
