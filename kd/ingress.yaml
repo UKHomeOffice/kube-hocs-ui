@@ -1,0 +1,22 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    ingress.kubernetes.io/secure-backends: "true"
+    ingress.kubernetes.io/whitelist-source-range: "{{.WHITELIST}}"
+  name: hocs-data-service
+spec:
+  rules:
+  - host: dataservice.{{.DNS_PREFIX}}hocs.homeoffice.gov.uk
+    http:
+      paths:
+      - backend:
+          serviceName: hocs-data-service
+          servicePort: 443
+        path: /
+  tls:
+  - hosts:
+    - dataservice.{{.DNS_PREFIX}}hocs.homeoffice.gov.uk
+    secretName: letsencrypt-hocs-data-service
