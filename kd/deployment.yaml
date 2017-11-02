@@ -6,13 +6,14 @@ metadata:
     version: {{.VERSION}}
 spec:
   replicas: 1
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 0
   selector:
     matchLabels:
       name: hocs-data-service
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 2
+    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -24,6 +25,10 @@ spec:
         image: quay.io/ukhomeofficedigital/vault-sidekick:v0.2.0
         imagePullPolicy: Always
         securityContext:
+           capabilities:
+             drop:
+               - SETUID
+               - SETGID
         resources:
          limits:
           memory: "100Mi"
@@ -53,6 +58,11 @@ spec:
       - name: proxy
         image: quay.io/ukhomeofficedigital/nginx-proxy:v3.2.0
         imagePullPolicy: Always
+        securityContext:
+           capabilities:
+             drop:
+               - SETUID
+               - SETGID
         resources:
          limits:
           memory: "100Mi"
@@ -86,18 +96,38 @@ spec:
             containerPort: 10443
       - name: hocs-data-service
         image: quay.io/ukhomeofficedigital/hocs-data-service:{{.VERSION}}
+        securityContext:
+           capabilities:
+             drop:
+               - SETUID
+               - SETGID
         env:
           - name: JAVA_OPTS
             value: '-Xms150m -Xmx250m'
-          - name: SPRING_PROFILES_ACTIVE
-            value: 'postgres'
           - name: SERVER_PORT
             value: '8080'
+          - name: ENDPOINTS_INFO_ENABLED
+            value: 'false'
+          - name: SPRING_PROFILES_ACTIVE
+            value: 'postgres'
           - name: SLS_DB_HOSTNAME
             valueFrom:
               secretKeyRef:
                 name: hocs-rds-access
                 key: endpoint
+          - name: SLS_DB_PORT
+            valueFrom:
+              secretKeyRef:
+                name: hocs-rds-access
+                key: port
+          - name: SLS_DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: hocs-rds-access
+                key: database_name
+          - name: SLS_SCHEMA_NAME
+            value:
+              'hocs_data'
           - name: SLS_DB_USERNAME
             valueFrom:
               secretKeyRef:
@@ -107,20 +137,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: hocs-rds-access
-                key: password
-          - name: SLS_DB_NAME
-            valueFrom:
-              secretKeyRef:
-                name: hocs-rds-access
-                key: database_name
-          - name: SLS_SCHEMA_NAME
-            value:
-              'hocs_data'
-          - name: SLS_DB_PORT
-            valueFrom:
-              secretKeyRef:
-                name: hocs-rds-access
-                key: port 
+                key: password 
         resources:
           limits:
             cpu: 1600m
