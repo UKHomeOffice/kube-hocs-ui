@@ -1,3 +1,4 @@
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -122,7 +123,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: hocs-rds-access
-                key: password 
+                key: password
         resources:
           limits:
             cpu: 1600m
