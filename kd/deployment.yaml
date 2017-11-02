@@ -65,7 +65,7 @@ spec:
           - name: PROXY_SERVICE_HOST
             value: '127.0.0.1'
           - name: PROXY_SERVICE_PORT
-            value: '8080'
+            value: '9000'
           - name: NAXSI_USE_DEFAULT_RULES
             value: 'FALSE'
           - name: ENABLE_UUID_PARAM
@@ -91,7 +91,7 @@ spec:
           - name: JAVA_OPTS
             value: '-Xms150m -Xmx250m'
           - name: SERVER_PORT
-            value: '8080'
+            value: '9001'
           - name: ENDPOINTS_INFO_ENABLED
             value: 'false'
           - name: SPRING_PROFILES_ACTIVE
@@ -131,7 +131,7 @@ spec:
             memory: 484Mi
         ports:
           - name: http
-            containerPort: 8080
+            containerPort: 9001
         livenessProbe:
           httpGet:
             path: /healthz
