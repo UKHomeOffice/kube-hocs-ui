@@ -126,10 +126,8 @@ spec:
                 key: password
         resources:
           limits:
-            cpu: 1600m
             memory: 612Mi
           requests:
-            cpu: 100m
             memory: 484Mi
         ports:
           - name: http
