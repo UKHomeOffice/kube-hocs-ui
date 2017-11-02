@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: vault-sidekick
-        image: quay.io/ukhomeofficedigital/vault-sidekick-jks:v0.2.0
+        image: quay.io/ukhomeofficedigital/vault-sidekick:v0.2.0
         imagePullPolicy: Always
         securityContext:
         resources:
