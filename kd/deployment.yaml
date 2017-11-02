@@ -120,7 +120,7 @@ spec:
           - name: SERVER_KEY
             value: /etc/nginx/secrets/hocs-data-service.pem
         volumeMounts:
-          - name: certs
+          - name: secrets
             mountPath: /etc/nginx/secrets
             readOnly: true
       - name: vault-side-kick
