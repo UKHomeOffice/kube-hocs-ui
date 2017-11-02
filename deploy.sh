@@ -9,4 +9,5 @@ env
 cd kd
 kd --insecure-skip-tls-verify --timeout 5m0s \
    --file service.yaml \
+   --file ingress.yaml \
    --file deployment.yaml
