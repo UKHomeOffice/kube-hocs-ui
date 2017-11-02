@@ -85,6 +85,13 @@ spec:
           timeoutSeconds: 10
       - name: proxy
         image: quay.io/ukhomeofficedigital/nginx-proxy:v3.2.0
+        resources:
+         limits:
+          memory: "100Mi"
+          cpu: 100m
+         requests:
+          memory: "50Mi"
+          cpu: 100m
         imagePullPolicy: Always
         ports:
         - containerPort: 80
@@ -100,6 +107,8 @@ spec:
             value: 'FALSE'
           - name: ERROR_REDIRECT_CODES
             value: "599"
+          - name: HTTPS_REDIRECT
+            value: 'FALSE'
           - name: ADD_NGINX_SERVER_CFG
             value: |
               add_header Cache-Control private;
@@ -111,7 +120,7 @@ spec:
           - name: SERVER_KEY
             value: /etc/nginx/secrets/hocs-data-service.pem
         volumeMounts:
-          - name: certs
+          - name: secrets
             mountPath: /etc/nginx/secrets
             readOnly: true
       - name: vault-side-kick
@@ -127,7 +136,7 @@ spec:
         args:
           - -output=/etc/nginx/secrets
           - -tls-skip-verify=true
-          - -cn=pki:services/$NAMESPACE/pki/issue/default:common_name=hocs-data-service.${NAMESPACE}.svc.cluster.local,file=/etc/keystore/hocs-data-service,fmt=bundle
+          - -cn=pki:services/${NAMESPACE}/pki/issue/default:common_name=hocs-data-service.${NAMESPACE}.svc.cluster.local,file=/etc/keystore/hocs-data-service,fmt=bundle
         env:
           - name: VAULT_ADDR
             value: "https://vault.vault.svc.cluster.local:8200"
@@ -141,8 +150,10 @@ spec:
               fieldRef:
                 fieldPath: metadata.namespace
         volumeMounts:
-          - mountPath: /etc/keystore
-            name: certs
+          - name: secrets
+            mountPath: /etc/nginx/secrets
+            readOnly: true
       volumes:
-        - name: certs
-          emptyDir: {}
+      - name: secrets
+        emptyDir:
+          medium: "Memory"
