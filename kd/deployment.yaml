@@ -89,7 +89,7 @@ spec:
         image: quay.io/ukhomeofficedigital/hocs-data-service:{{.VERSION}}
         env:
           - name: JAVA_OPTS
-            value: '-Xms150m -Xmx250m'
+            value: '-Xms150m -Xmx512m'
           - name: SERVER_PORT
             value: '9001'
           - name: ENDPOINTS_INFO_ENABLED
@@ -126,7 +126,7 @@ spec:
                 key: password
         resources:
           limits:
-            memory: 612Mi
+            memory: 960Mi
           requests:
             memory: 484Mi
         ports:
