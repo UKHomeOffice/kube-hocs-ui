@@ -122,7 +122,7 @@ spec:
           - mountPath: /etc/nginx/secrets
             name: secrets
       - name: proxy
-        image: quay.io/ukhomeofficedigital/nginx-proxy:v3.2.0
+        image: quay.io/ukhomeofficedigital/pttg-nginx-proxy:v3.1.3a
         imagePullPolicy: Always
         resources:
          limits:
@@ -146,8 +146,6 @@ spec:
             value: /etc/nginx/secrets/hocs-data-service-bundle.pem
           - name: SERVER_KEY
             value: /etc/nginx/secrets/hocs-data-service-key.pem
-          - name: ADD_NGINX_SERVER_CFG
-            value: 'gzip off;'
         volumeMounts:
           - name: secrets
             mountPath: /etc/nginx/secrets
