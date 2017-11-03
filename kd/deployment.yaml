@@ -91,7 +91,7 @@ spec:
           - name: JAVA_OPTS
             value: '-Xms150m -Xmx1792m'
           - name: SERVER_PORT
-            value: '9001'
+            value: '8000'
           - name: ENDPOINTS_INFO_ENABLED
             value: 'false'
           - name: SPRING_PROFILES_ACTIVE
@@ -133,7 +133,7 @@ spec:
             cpu: 400m
         ports:
           - name: http
-            containerPort: 9001
+            containerPort: 8000
         livenessProbe:
           httpGet:
             path: /healthz
