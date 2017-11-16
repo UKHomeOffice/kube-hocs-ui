@@ -26,7 +26,7 @@ spec:
         image: quay.io/ukhomeofficedigital/hocs-data-service:{{.VERSION}}
         env:
           - name: JAVA_OPTS
-            value: '-Xms150m -Xmx1792m'
+            value: '-Xms150m -Xmx768m'
           - name: SERVER_PORT
             value: '8080'
           - name: ENDPOINTS_INFO_ENABLED
@@ -63,11 +63,11 @@ spec:
                 key: password
         resources:
           limits:
-            memory: 2048Mi
-            cpu: 400m
+            memory: 1024Mi
+            cpu: 200m
           requests:
             memory: 1024Mi
-            cpu: 400m
+            cpu: 200m
         ports:
           - name: http
             containerPort: 8080
@@ -78,7 +78,7 @@ spec:
             httpHeaders:
               - name: X-probe
                 value: kubelet
-          initialDelaySeconds: 240
+          initialDelaySeconds: 90
           periodSeconds: 20
           timeoutSeconds: 10
         readinessProbe:
@@ -88,7 +88,7 @@ spec:
             httpHeaders:
               - name: X-probe
                 value: kubelet
-          initialDelaySeconds: 240
+          initialDelaySeconds: 90
           periodSeconds: 20
           timeoutSeconds: 10
         imagePullPolicy: Always
@@ -122,7 +122,7 @@ spec:
           - mountPath: /etc/nginx/secrets
             name: secrets
       - name: proxy
-        image: quay.io/ukhomeofficedigital/pttg-nginx-proxy:v3.1.3a
+        image: quay.io/ukhomeofficedigital/nginx-proxy:v3.2
         imagePullPolicy: Always
         resources:
          limits:
