@@ -2,14 +2,14 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: hocs-data-service
+  name: hocs-ui
   labels:
     version: {{.VERSION}}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: hocs-data-service
+      name: hocs-ui
   strategy:
     rollingUpdate:
       maxUnavailable: 0
@@ -18,49 +18,15 @@ spec:
   template:
     metadata:
       labels:
-        name: hocs-data-service
+        name: hocs-ui
         version: {{.VERSION}}
     spec:
       containers:
-      - name: hocs-data-service
-        image: quay.io/ukhomeofficedigital/hocs-data-service:{{.VERSION}}
+      - name: hocs-ui
+        image: quay.io/ukhomeofficedigital/hocs-ui:{{.VERSION}}
         env:
-          - name: JAVA_OPTS
-            value: '-Xms150m -Xmx768m'
           - name: SERVER_PORT
             value: '8080'
-          - name: ENDPOINTS_INFO_ENABLED
-            value: 'false'
-          - name: SPRING_PROFILES_ACTIVE
-            value: 'postgres'
-          - name: SLS_DB_HOSTNAME
-            valueFrom:
-              secretKeyRef:
-                name: hocs-rds-access
-                key: endpoint
-          - name: SLS_DB_PORT
-            valueFrom:
-              secretKeyRef:
-                name: hocs-rds-access
-                key: port
-          - name: SLS_DB_NAME
-            valueFrom:
-              secretKeyRef:
-                name: hocs-rds-access
-                key: database_name
-          - name: SLS_SCHEMA_NAME
-            value:
-              'hocs_dataservice'
-          - name: SLS_DB_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: hocs-rds-access
-                key: username
-          - name: SLS_DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: hocs-rds-access
-                key: password
         resources:
           limits:
             memory: 1024Mi
@@ -105,7 +71,7 @@ spec:
         args:
           - -output=/etc/nginx/secrets
           - -tls-skip-verify=true
-          - -cn=pki:services/${NAMESPACE}/pki/issue/default:common_name=hocs-data-service.${NAMESPACE}.svc.cluster.local,file=/etc/nginx/secrets/hocs-data-service,fmt=bundle
+          - -cn=pki:services/${NAMESPACE}/pki/issue/default:common_name=hocs-ui.${NAMESPACE}.svc.cluster.local,file=/etc/nginx/secrets/hocs-ui,fmt=bundle
         env:
           - name: VAULT_ADDR
             value: "https://vault.vault.svc.cluster.local:8200"
@@ -143,9 +109,9 @@ spec:
           - name: HTTPS_REDIRECT
             value: 'FALSE'
           - name: SERVER_CERT
-            value: /etc/nginx/secrets/hocs-data-service-bundle.pem
+            value: /etc/nginx/secrets/hocs-ui-bundle.pem
           - name: SERVER_KEY
-            value: /etc/nginx/secrets/hocs-data-service-key.pem
+            value: /etc/nginx/secrets/hocs-ui-key.pem
         volumeMounts:
           - name: secrets
             mountPath: /etc/nginx/secrets
