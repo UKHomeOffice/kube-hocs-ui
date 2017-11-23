@@ -37,26 +37,6 @@ spec:
         ports:
           - name: http
             containerPort: 8080
-        livenessProbe:
-          httpGet:
-            path: /healthz
-            port: http
-            httpHeaders:
-              - name: X-probe
-                value: kubelet
-          initialDelaySeconds: 180
-          periodSeconds: 20
-          timeoutSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /healthz
-            port: http
-            httpHeaders:
-              - name: X-probe
-                value: kubelet
-          initialDelaySeconds: 180
-          periodSeconds: 20
-          timeoutSeconds: 10
         imagePullPolicy: Always
       - name: vault-sidekick
         image: quay.io/ukhomeofficedigital/vault-sidekick:v0.2.0
