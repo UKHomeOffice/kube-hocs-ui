@@ -42,6 +42,11 @@ spec:
           - name: http
             containerPort: 8080
         imagePullPolicy: Always
+        volumeMounts:
+          - name: nginxlogs
+            mountPath: /var/log/nginx
+          - name: symfonyvar
+            mountPath: /var/www/symfony/var
       - name: vault-sidekick
         image: quay.io/ukhomeofficedigital/vault-sidekick:v0.2.0
         imagePullPolicy: Always
@@ -105,5 +110,11 @@ spec:
             containerPort: 10443
       volumes:
       - name: secrets
+        emptyDir:
+          medium: "Memory"
+      - name: nginxlogs
+        emptyDir:
+          medium: "Memory"
+      - name: symfonyvar
         emptyDir:
           medium: "Memory"
