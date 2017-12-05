@@ -43,6 +43,9 @@ spec:
             containerPort: 8080
         imagePullPolicy: Always
         volumeMounts:
+          - name: secrets
+            mountPath: /data
+            readOnly: true
           - name: nginxlogs
             mountPath: /var/log/nginx
           - name: symfonyvar
