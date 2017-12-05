@@ -47,6 +47,9 @@ spec:
             mountPath: /var/log/nginx
           - name: symfonyvar
             mountPath: /var/www/symfony/var
+          - name: secrets
+            mountPath: /etc/nginx/secrets
+            readOnly: true
       - name: vault-sidekick
         image: quay.io/ukhomeofficedigital/vault-sidekick:v0.2.0
         imagePullPolicy: Always
