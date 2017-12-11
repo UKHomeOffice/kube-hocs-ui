@@ -17,5 +17,5 @@ spec:
         path: /
   tls:
   - hosts:
-    - ui.{{.DNS_PREFIX}}hocs.homeoffice.gov.uk
+    - dev.hocs.homeoffice.gov.uk
     secretName: letsencrypt-hocs-ui
