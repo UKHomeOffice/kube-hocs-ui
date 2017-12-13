@@ -8,7 +8,7 @@ metadata:
   name: hocs-ui
 spec:
   rules:
-  - host: ui.{{.DNS_PREFIX}}hocs.homeoffice.gov.uk
+  - host: {{.DNS_PREFIX}}hocs.homeoffice.gov.uk
     http:
       paths:
       - backend:
@@ -17,5 +17,5 @@ spec:
         path: /
   tls:
   - hosts:
-    - dev.hocs.homeoffice.gov.uk
+    - {{.DNS_PREFIX}}hocs.homeoffice.gov.uk
     secretName: letsencrypt-hocs-dev
