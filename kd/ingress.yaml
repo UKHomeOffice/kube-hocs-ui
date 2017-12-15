@@ -18,4 +18,4 @@ spec:
   tls:
   - hosts:
     - {{.DNS_PREFIX}}hocs.homeoffice.gov.uk
-    secretName: letsencrypt-hocs-dev
+    secretName: letsencrypt-hocs-ui
