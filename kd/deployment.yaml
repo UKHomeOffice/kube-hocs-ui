@@ -33,11 +33,11 @@ spec:
             value: app_dev\.php
         resources:
           limits:
-            memory: 1024Mi
-            cpu: 400m
+            memory: 612Mi
+            cpu: 1600m
           requests:
-            memory: 1024Mi
-            cpu: 200m
+            memory: 484Mi
+            cpu: 100m
         ports:
           - name: http
             containerPort: 8080
