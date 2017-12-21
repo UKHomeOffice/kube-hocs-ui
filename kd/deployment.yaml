@@ -26,11 +26,20 @@ spec:
         image: quay.io/ukhomeofficedigital/hocs-ui:{{.VERSION}}
         env:
           - name: APP_ENV
-            value: 'dev'
+            valueFrom:
+              secretKeyRef:
+                name: hocs-ui-env
+                key: environment
           - name: SYMFONY_ENV
-            value: 'dev'
+            valueFrom:
+              secretKeyRef:
+                name: hocs-ui-env
+                key: environment
           - name: APP_PHP
-            value: app_dev\.php
+            valueFrom:
+              secretKeyRef:
+                name: hocs-ui-env
+                key: phpfile
         resources:
           limits:
             memory: 612Mi
