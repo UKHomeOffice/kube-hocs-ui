@@ -123,5 +123,5 @@ spec:
         emptyDir:
           medium: "Memory"
       - name: session
-        emptyDir:
-          medium: "Memory"
+        persistentVolumeClaim:
+         claimName: php-pv-claim
