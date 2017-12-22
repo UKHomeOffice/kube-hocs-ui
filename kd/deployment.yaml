@@ -6,7 +6,7 @@ metadata:
   labels:
     version: {{.VERSION}}
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       name: hocs-ui
@@ -55,8 +55,8 @@ spec:
           - name: secrets
             mountPath: /data
             readOnly: true
-          - name: nginxlogs
-            mountPath: /var/log/nginx
+          - name: session
+            mountPath: /session
       - name: vault-sidekick
         image: quay.io/ukhomeofficedigital/vault-sidekick:v0.2.0
         imagePullPolicy: Always
@@ -122,12 +122,6 @@ spec:
       - name: secrets
         emptyDir:
           medium: "Memory"
-      - name: nginxlogs
-        emptyDir:
-          medium: "Memory"
-      - name: symfonyvar
-        emptyDir:
-          medium: "Memory"
-      - name: symfonyweb
+      - name: session
         emptyDir:
           medium: "Memory"
