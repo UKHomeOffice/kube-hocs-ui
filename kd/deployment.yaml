@@ -55,8 +55,6 @@ spec:
           - name: secrets
             mountPath: /data
             readOnly: true
-          - name: session
-            mountPath: /session
       - name: vault-sidekick
         image: quay.io/ukhomeofficedigital/vault-sidekick:v0.2.0
         imagePullPolicy: Always
@@ -122,6 +120,3 @@ spec:
       - name: secrets
         emptyDir:
           medium: "Memory"
-      - name: session
-        persistentVolumeClaim:
-         claimName: php-pv-claim
