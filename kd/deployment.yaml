@@ -50,6 +50,26 @@ spec:
         ports:
           - name: http
             containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /login
+            port: http
+            httpHeaders:
+              - name: X-probe
+                value: kubelet
+          initialDelaySeconds: 180
+          periodSeconds: 20
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /login
+            port: http
+            httpHeaders:
+              - name: X-probe
+                value: kubelet
+          initialDelaySeconds: 180
+          periodSeconds: 20
+          timeoutSeconds: 10
         imagePullPolicy: Always
         volumeMounts:
           - name: secrets
