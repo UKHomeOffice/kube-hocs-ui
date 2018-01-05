@@ -95,6 +95,8 @@ spec:
           memory: "50Mi"
           cpu: 100m
         env:
+          - name: CLIENT_MAX_BODY_SIZE
+            value: '25'
           - name: PROXY_SERVICE_HOST
             value: '127.0.0.1'
           - name: PROXY_SERVICE_PORT
