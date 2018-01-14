@@ -6,7 +6,7 @@ metadata:
   labels:
     version: {{.VERSION}}
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       name: hocs-ui
@@ -42,11 +42,11 @@ spec:
                 key: phpfile
         resources:
           limits:
-            memory: 1536Mi
+            memory: 2048Mi
             cpu: 1600m
           requests:
             memory: 1024Mi
-            cpu: 100m
+            cpu: 200m
         ports:
           - name: http
             containerPort: 8080
