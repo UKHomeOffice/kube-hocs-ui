@@ -45,8 +45,8 @@ spec:
             memory: 2048Mi
             cpu: 1600m
           requests:
-            memory: 1024Mi
-            cpu: 200m
+            memory: 512Mi
+            cpu: 100m
         ports:
           - name: http
             containerPort: 8080
