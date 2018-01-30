@@ -76,7 +76,7 @@ spec:
             mountPath: /data
             readOnly: true
       - name: clamd
-        image: quay.io/ukhomeofficedigital/clamav
+        image: quay.io/ukhomeofficedigital/clamav:v1.4.0
         imagePullPolicy: Always
         ports:
         - containerPort: 3310
