@@ -2,8 +2,6 @@ apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: hocs-ui
-  labels:
-    version: {{.VERSION}}
 spec:
   maxReplicas: 3
   minReplicas: 1
