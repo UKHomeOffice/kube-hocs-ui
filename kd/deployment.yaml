@@ -42,7 +42,7 @@ spec:
                 key: phpfile
         resources:
           limits:
-            memory: 1024Mi
+            memory: 2048Mi
             cpu: 1600m
           requests:
             memory: 512Mi
