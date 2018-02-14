@@ -43,7 +43,7 @@ spec:
         resources:
           limits:
             memory: 2048Mi
-            cpu: 1600m
+            cpu: 800m
           requests:
             memory: 512Mi
             cpu: 100m
@@ -75,25 +75,6 @@ spec:
           - name: secrets
             mountPath: /data
             readOnly: true
-      - name: clamd
-        image: quay.io/ukhomeofficedigital/clamav:v1.4.0
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 3310
-          name: api
-          protocol: TCP
-        readinessProbe:
-          exec:
-            command:
-            - /readyness.sh
-          initialDelaySeconds: 90
-          timeoutSeconds: 10
-          periodSeconds: 30
-          failureThreshold: 10
-        resources:
-         limits:
-          cpu: 200m
-          memory: 1000M
       - name: vault-sidekick
         image: quay.io/ukhomeofficedigital/vault-sidekick:v0.2.0
         imagePullPolicy: Always
