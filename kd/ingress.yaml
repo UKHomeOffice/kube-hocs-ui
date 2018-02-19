@@ -23,7 +23,7 @@ spec:
           serviceName: hocs-ui
           servicePort: 443
         path: /
-    - host: ui.{{.DNS_PREFIX}}hocs.homeoffice.gov.uk
+  - host: ui.{{.DNS_PREFIX}}hocs.homeoffice.gov.uk
     http:
       paths:
       - backend:
