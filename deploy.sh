@@ -3,7 +3,7 @@
 if [ $ENVIRONMENT == "prod" ]
 then
     export KUBE_TOKEN=${PROD_KUBE_TOKEN}
-    export DNS_PREFIX=
+    export DNS_PREFIX="prod"
 else
     export DNS_PREFIX=${ENVIRONMENT}.notprod.
 fi
