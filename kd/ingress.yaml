@@ -23,24 +23,8 @@ spec:
           serviceName: hocs-ui
           servicePort: 443
         path: /
-  - host: prod.{{.DNS_PREFIX}}hocs.homeoffice.gov.uk
-    http:
-      paths:
-      - backend:
-          serviceName: hocs-ui
-          servicePort: 443
-        path: /
-  - host: www.prod.{{.DNS_PREFIX}}hocs.homeoffice.gov.uk
-    http:
-      paths:
-      - backend:
-          serviceName: hocs-ui
-          servicePort: 443
-        path: /
   tls:
   - hosts:
     - {{.DNS_PREFIX}}hocs.homeoffice.gov.uk
     - www.{{.DNS_PREFIX}}hocs.homeoffice.gov.uk
-    - prod.{{.DNS_PREFIX}}hocs.homeoffice.gov.uk
-    - www.prod.{{.DNS_PREFIX}}hocs.homeoffice.gov.uk
     secretName: letsencrypt-hocs-ui
