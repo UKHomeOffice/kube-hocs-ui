@@ -21,8 +21,8 @@ else
         export KUBE_TOKEN=${HOCS_UI_QA}
         export REPLICAS="2"
     else
-        echo "deploy ${VERSION} to dev namespace, HOCS_UI_QA drone secret"
-        export KUBE_TOKEN=${HOCS_UI_QA}
+        echo "deploy ${VERSION} to dev namespace, HOCS_UI_DEV drone secret"
+        export KUBE_TOKEN=${HOCS_UI_DEV}
         export REPLICAS="1"
     fi
 fi
