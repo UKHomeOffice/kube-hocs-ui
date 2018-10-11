@@ -3,20 +3,23 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   annotations:
-    kubernetes.io/tls-acme: "true"
     ingress.kubernetes.io/secure-backends: "true"
     ingress.kubernetes.io/proxy-body-size: "20m"
+    kubernetes.io/ingress.class: nginx-external
+    stable.k8s.psg.io/kcm.provider: http
+  labels:
+    stable.k8s.psg.io/kcm.class: default
   name: hocs-ui
 spec:
   rules:
-  - host: {{.DNS_PREFIX}}hocs.homeoffice.gov.uk
+  - host: {{.DOMAIN_NAME}}
     http:
       paths:
       - backend:
           serviceName: hocs-ui
           servicePort: 443
         path: /
-  - host: www.{{.DNS_PREFIX}}hocs.homeoffice.gov.uk
+  - host: www.{{.DOMAIN_NAME}}
     http:
       paths:
       - backend:
@@ -25,6 +28,6 @@ spec:
         path: /
   tls:
   - hosts:
-    - {{.DNS_PREFIX}}hocs.homeoffice.gov.uk
-    - www.{{.DNS_PREFIX}}hocs.homeoffice.gov.uk
+    - {{.DOMAIN_NAME}}
+    - www.{{.DOMAIN_NAME}}
     secretName: letsencrypt-hocs-ui
