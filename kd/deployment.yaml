@@ -61,11 +61,11 @@ spec:
                 - SETGID
           resources:
             limits:
-              memory: 256Mi
-              cpu: 300m
+              memory: 512Mi
+              cpu: 350m
             requests:
-              memory: 128Mi
-              cpu: 200m
+              memory: 256Mi
+              cpu: 250m
           env:
             - name: CLIENT_MAX_BODY_SIZE
               value: '15'
