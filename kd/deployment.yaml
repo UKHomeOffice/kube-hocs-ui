@@ -122,10 +122,10 @@ spec:
           resources:
             limits:
               cpu: 600m
-              memory: 2048Mi
+              memory: 3096Mi
             requests:
-              cpu: 200m
-              memory: 1024Mi
+              cpu: 400m
+              memory: 2048Mi
           ports:
             - name: http
               containerPort: 8080
