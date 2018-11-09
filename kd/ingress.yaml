@@ -27,6 +27,20 @@ spec:
           serviceName: hocs-ui
           servicePort: 443
         path: /
+  - host: {{.LEGACY_DOMAIN_NAME}}
+    http:
+      paths:
+      - backend:
+          serviceName: hocs-ui
+          servicePort: 443
+        path: /
+  - host: www.{{.LEGACY_DOMAIN_NAME}}
+    http:
+      paths:
+      - backend:
+          serviceName: hocs-ui
+          servicePort: 443
+        path: /
   tls:
   - hosts:
     - {{.DOMAIN_NAME}}
