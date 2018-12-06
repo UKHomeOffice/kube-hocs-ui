@@ -4,6 +4,7 @@ kind: Ingress
 metadata:
   annotations:
     ingress.kubernetes.io/secure-backends: "true"
+    ingress.kubernetes.io/backend-protocol: "HTTPS"
     ingress.kubernetes.io/proxy-body-size: "20m"
     ingress.kubernetes.io/whitelist-source-range: {{.IP_WHITELIST}}
     kubernetes.io/ingress.class: nginx-external
@@ -12,6 +13,7 @@ metadata:
     stable.k8s.psg.io/kcm.class: default
   name: hocs-ui
 spec:
+
   rules:
   - host: {{.DOMAIN_NAME}}
     http:
